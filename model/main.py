@@ -20,6 +20,7 @@ def clean_data() -> pd.DataFrame:
 
 def main():
     data = clean_data()
+    print(data.head())
  
     return
 
