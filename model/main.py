@@ -1,7 +1,8 @@
 import pandas as pd
 
-
-def create_model():
+def create_model(data):
+    X = data.drop(["diagnosis"],axis = 1)
+    y = data["diagnosis"]
     return
 
 # Fonction pour nettoyer les données
@@ -18,10 +19,10 @@ def clean_data() -> pd.DataFrame:
     return data  # Retourne les données nettoyées au format DataFrame
 
 
+
+
 def main():
-    data = clean_data()
-    print(data.head())
- 
+    data = clean_data() 
     return
 
 if __name__ == '__main__':
