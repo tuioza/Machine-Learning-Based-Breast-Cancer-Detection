@@ -33,7 +33,7 @@ def create_model(data):
 # Fonction pour nettoyer les données
 def clean_data() -> pd.DataFrame:
     # Lecture du fichier CSV
-    data: pd.DataFrame = pd.read_csv("data/data.csv")
+    data= pd.DataFrame = pd.read_csv("data/data.csv")
     
     # Suppression des colonnes 'Unnamed: 32' et 'id'
     data = data.drop(['Unnamed: 32', 'id'], axis=1)
@@ -42,9 +42,6 @@ def clean_data() -> pd.DataFrame:
     data['diagnosis'] = data['diagnosis'].map({'M': 1, 'B': 0})
     
     return data  # Retourne les données nettoyées au format DataFrame
-
-
-
 
 
 
