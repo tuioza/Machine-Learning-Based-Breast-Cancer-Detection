@@ -3,6 +3,8 @@ import pandas as pd
 import plotly.graph_objects as go
 import pickle5 as pickle
 import numpy as np
+from sklearn.preprocessing import StandardScaler
+
 
 def clean_data() -> pd.DataFrame:
     # Lecture du fichier CSV
@@ -18,7 +20,7 @@ def clean_data() -> pd.DataFrame:
 
 def add_sidebar():
     st.sidebar.header('Cell nuclei measurement')
-    data = clean_data()
+    data = clean_data() #importation des features du dataset pour la sidebar 
     slider_labels = [
         ("Radius (mean)", "radius_mean"),
         ("Texture (mean)", "texture_mean"),
@@ -134,12 +136,29 @@ def get_radar_chart(input_data):
   return fig
 
 def add_prediction(input_data):
-   model = pickle.load(open("model/model.pkl","rb"))
-   scaler = pickle.load(open("model/scaler.pkl","rb"))
-   input_array = np.array(list(input_data))
-   st.write(input_array)
+   model = pickle.load(open("model/model.pkl", "rb"))
+   scaler = pickle.load(open("model/scaler.pkl", "rb"))
+   input_array = np.array(list(input_data.values())).reshape(1, -1)
+    
+   input_array_scaled = scaler.transform(input_array)
+    
+   prediction = model.predict(input_array_scaled)
+    
+   st.subheader("Cell cluster prediction")
+   st.write("The cell cluster is:")
+    
+   if prediction[0] == 0: 
+    st.write("<span class='diagnosis benign'>Benign</span>", unsafe_allow_html=True)
+   else:
+    st.write("<span class='diagnosis malicious'>Malicious</span>", unsafe_allow_html=True)
+   st.write("Probability of being benign: ", model.predict_proba(input_array_scaled)[0][0])
+   st.write("Probability of being malicious: ", model.predict_proba(input_array_scaled)[0][1])
+    
+   st.write("This app can assist medical professionals in making a diagnosis, but should not be used as a substitute for a professional diagnosis.")
+
 
 def main():
+    #utilisation de la bibliothèque streamlit pour la configuration de la page
     st.set_page_config(
         page_title='Cancer prediction',
         layout='wide',
