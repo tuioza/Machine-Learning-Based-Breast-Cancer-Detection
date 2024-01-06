@@ -19,7 +19,7 @@ def clean_data() -> pd.DataFrame:
     return data  # Retourne les données nettoyées au format DataFrame
 
 def add_sidebar():
-    st.sidebar.header('Cell nuclei measurement')
+    st.sidebar.header("Mesure des noyaux cellulaires")
     data = clean_data() #importation des features du dataset pour la sidebar 
     slider_labels = [
         ("Radius (mean)", "radius_mean"),
@@ -144,23 +144,23 @@ def add_prediction(input_data):
     
    prediction = model.predict(input_array_scaled)
     
-   st.subheader("Cell cluster prediction")
-   st.write("The cell cluster is:")
+   st.subheader("Prédiction de regroupement cellulaire")
+   st.write("Le regroupement cellulaire est :")
     
    if prediction[0] == 0: 
-    st.write("<span class='diagnosis benign'>Benign</span>", unsafe_allow_html=True)
+    st.write("<span class='diagnostique bénin'>Bénin</span>", unsafe_allow_html=True)
    else:
-    st.write("<span class='diagnosis malicious'>Malicious</span>", unsafe_allow_html=True)
-   st.write("Probability of being benign: ", model.predict_proba(input_array_scaled)[0][0])
-   st.write("Probability of being malicious: ", model.predict_proba(input_array_scaled)[0][1])
+    st.write("<span class='diagnostique malin'>Maligne</span>", unsafe_allow_html=True)
+   st.write("Probabilité d'être bénin : ", model.predict_proba(input_array_scaled)[0][0])
+   st.write("Probabilité d'être maligne : ", model.predict_proba(input_array_scaled)[0][1])
     
-   st.write("This app can assist medical professionals in making a diagnosis, but should not be used as a substitute for a professional diagnosis.")
+   st.write("Cet outil peut soutenir les professionnels de la santé dans le processus de diagnostic, mais il ne doit en aucun cas remplacer un diagnostic établi par un professionnel.")
 
 
 def main():
     #utilisation de la bibliothèque streamlit pour la configuration de la page
     st.set_page_config(
-        page_title='Cancer prediction',
+        page_title='Prédiction du cancer',
         layout='wide',
         initial_sidebar_state='expanded',
         
@@ -170,8 +170,8 @@ def main():
     input_data = add_sidebar()
 
     with st.container():
-        st.title("Breast cancer predictor")
-        st.write("The app uses a machine learning model to predict if a breast mass is benign or malignant based on lab measurements. You can manually update measurements using sliders in the sidebar.")
+        st.title("Outil prédictif pour le diagnostic du cancer du sein")
+        st.write("L'application utilise un modèle d'apprentissage automatique pour prédire si une masse mammaire est bénigne ou maligne en se basant sur des mesures de laboratoire. Vous pouvez mettre à jour manuellement ces mesures à l'aide de curseurs dans la barre latérale.")
     col1, col2 = st.columns((4,1))
     with col1:
         radar_chart = get_radar_chart(input_data)
