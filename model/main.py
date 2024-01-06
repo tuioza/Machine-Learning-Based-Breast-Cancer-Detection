@@ -47,8 +47,6 @@ def clean_data() -> pd.DataFrame:
     
     return data  # Retourne les données nettoyées au format DataFrame
 
-
-
 def main():
     data = clean_data() 
     model, scaler = create_model(data)
